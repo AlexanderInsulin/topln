@@ -1,3 +1,5 @@
+import { toPostfix, evalPostfix } from '@/utils'
+
 const emptyFraction = { numerator: '', denominator: '' }
 
 const initialState = {
@@ -16,7 +18,7 @@ const getters = {
   toString: (state, getters) =>
     (getters.filled
       ? (state.fractions.map((fraction, index) => (
-        `${fraction.numerator}/${fraction.denominator}${state.operators[index] ? ' ' + state.operators[index] : ''}`
+        `${fraction.numerator}/${fraction.denominator}${state.operators[index] ? ' ' + state.operators[index].split('').join(' ') : ''}`
       )))
       : [])
       .join(' ')
@@ -24,7 +26,18 @@ const getters = {
 
 const actions = {
   addFraction: (context) => context.commit('addFraction'),
-  updateFraction: (context, {index, data}) => context.commit('updateFraction', {index, data})
+  updateFraction: (context, {index, data}) => context.commit('updateFraction', {index, data}),
+  updateOperator: (context, {index, data}) => context.commit('updateOperator', {index, data}),
+  calculate: (context) => {
+    try {
+      let postfix = toPostfix(context.getters.toString)
+      let value = evalPostfix(postfix).split('/')
+      let fraction = { numerator: value[0], denominator: value[1] }
+      context.commit('setValue', fraction)
+    } catch (e) {
+      console.log('shit')
+    }
+  }
 }
 
 const mutations = {
@@ -33,10 +46,14 @@ const mutations = {
     state.operators.unshift('')
   },
   updateFraction: (state, { index, data }) => {
-    let fraction = state.fractions.find((fraction, findex) => index === findex)
+    let fraction = state.fractions.find((fraction, fIndex) => index === fIndex)
     fraction.denominator = data.denominator
     fraction.numerator = data.numerator
-  }
+  },
+  updateOperator: (state, { index, data }) => {
+    state.operators[index] = data
+  },
+  setValue: (state, fraction) => { state.value = fraction }
 }
 
 export default {

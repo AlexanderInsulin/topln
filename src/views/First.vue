@@ -1,13 +1,24 @@
 <template>
     <div>
         <button @click="addFraction">add</button>
+        <button @click="calculate">calc</button>
         <div class="first__container__fraction-container">
-            <fraction
+            <div
+                class="first__container__fraction-container__group"
                 v-for="(fraction, index) in fractions"
                 :key="index"
-                :value="fraction"
-                @updateFraction="updateFraction({index, data: $event})"
-            />
+            >
+                <fraction
+                    :value="fraction"
+                    @updateFraction="updateFraction({index, data: $event})"
+                />
+                <operator
+                    v-if="operators[index] != undefined"
+                    :value="operators[index]"
+                    @updateOperator="updateOperator({index, data: $event})"
+                />
+            </div>
+
         </div>
     </div>
 </template>
@@ -15,10 +26,11 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import Fraction from '@/components/Fraction'
+import Operator from '../components/Operator'
 
 export default {
   components: {
-    Fraction
+    Fraction, Operator
   },
   data: () => ({
     text: ''
@@ -28,7 +40,7 @@ export default {
     'fractions', 'operators'
   ]),
   methods: mapActions('calculator', [
-    'addFraction', 'updateFraction'
+    'addFraction', 'updateFraction', 'updateOperator', 'calculate'
   ])
 
 }
@@ -42,7 +54,13 @@ export default {
         &__fraction-container {
             display: flex;
             justify-content: center;
-            flex-wrap: wrap
+            flex-wrap: wrap;
+
+            &__group {
+                display: flex;
+                justify-content: center;
+                align-content: center;
+            }
         }
     }
 </style>
