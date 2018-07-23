@@ -1,7 +1,6 @@
 <template>
     <div>
         <button @click="addFraction">add</button>
-        <button @click="calculate">calc</button>
         <div class="first__container__fraction-container">
             <div
                 class="first__container__fraction-container__group"
