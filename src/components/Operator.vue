@@ -3,7 +3,7 @@
         <input
             class="operator__input"
             v-operators
-            :value="value.numerator"
+            :value="value"
             @filtered="updateOperator($event)"
         >
     </div>

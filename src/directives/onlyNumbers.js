@@ -26,7 +26,6 @@ const onUnfocus = (el, vnode) => {
 
 const onlyNumbers = {
   bind: (el, binding, vnode) => {
-    console.log('here')
     el.dataset.prevValue = el.value
     el.addEventListener('input', () => onInput(el, vnode))
     el.addEventListener('blur', () => onUnfocus(el, vnode))

@@ -18,10 +18,7 @@ const onInput = (el, vnode) => {
 const onlyOperators = {
   bind: (el, binding, vnode) => {
     el.dataset.prevValue = el.value
-    el.addEventListener('input', () => onInput(el, vnode))
-  },
-  componentUpdated: (el, vnode) => {
-    el.value = vnode.data
+    vnode.elm.addEventListener('input', () => onInput(el, vnode))
   }
 }
 
