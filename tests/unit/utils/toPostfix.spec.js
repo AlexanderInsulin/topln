@@ -20,4 +20,11 @@ describe('Обратная польская запись', () => {
     expect(toPostfix('( ( 2 / 2 ) - 1 * 3 / ( 24 + 4 ) ) + 37 + ( 23 * ( 13 - 12 ) / 24 )'))
       .toBe('2 2 / 1 3 * 24 4 + / - 37 + 23 13 12 - * 24 / +')
   })
+
+  it('Отлавливает неправильную расстановку скобок', () => {
+    expect(() => toPostfix(')')).toThrow()
+    expect(() => toPostfix('(')).toThrow()
+    expect(() => toPostfix('( ) )')).toThrow()
+    expect(() => toPostfix('( ( ( ) )')).toThrow()
+  })
 })

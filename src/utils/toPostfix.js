@@ -30,6 +30,7 @@ const toPostfix = (exp) => {
       out.push(token)
     }
   })
+  if (ops.find(op => op === '(')) throw new Error('Неправильный формат выражения')
   return out.concat(ops.reverse()).join(' ')
 }
 
