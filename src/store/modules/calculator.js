@@ -29,7 +29,7 @@ const actions = {
 
 const mutations = {
   addFraction: (state) => {
-    state.fractions.unshift(emptyFraction)
+    state.fractions.unshift({ ...emptyFraction })
     state.operators.unshift('')
   },
   updateFraction: (state, { index, data }) => {
