@@ -44,7 +44,7 @@ const actions = {
         let fraction = { numerator: value[0], denominator: value[1] }
         context.commit('setValue', fraction)
       } catch (e) {
-        console.log('')
+        context.commit('setErrors', e)
       }
     }
   }
@@ -63,7 +63,8 @@ const mutations = {
   updateOperator: (state, { index, data }) => {
     Vue.set(state.operators, index, data)
   },
-  setValue: (state, fraction) => { state.value = fraction }
+  setValue: (state, fraction) => { state.value = fraction },
+  setErrors: (state, errors) => { state.errors = errors }
 }
 
 export default {

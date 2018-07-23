@@ -6,6 +6,9 @@
 </template>
 
 <script>
+/**
+ * Компонент комментария с возможностью удаления
+ */
 export default {
   props: {
     value: {
@@ -19,6 +22,12 @@ export default {
     }
   },
   methods: {
+    /**
+     * Эвент удаления комментария
+     *
+     * @event deleteComment
+     * @type {Number} id комментария
+     */
     deleteComment () {
       this.$emit('deleteComment', this.value.id)
     }

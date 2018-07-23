@@ -19,6 +19,9 @@
 <script>
 import numbers from '../directives/onlyNumbers'
 
+/**
+ * Компонент дроби
+ */
 export default {
   directives: {
     numbers
@@ -30,6 +33,12 @@ export default {
     }
   },
   methods: {
+    /**
+     * Эвент обновления дроби
+     * Вызываеться после форматирования
+     * @event updateFraction
+     * @type {Object} дробь
+     */
     updateNumerator (event) {
       this.$emit('updateFraction', {...this.value, numerator: event.detail})
     },

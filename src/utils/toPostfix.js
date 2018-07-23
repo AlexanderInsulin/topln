@@ -7,7 +7,11 @@ const operators = {
   '/': 3
 }
 
-// ( 2 / 2 ) - 1 * 3 / ( 24 + 4 )
+/**
+ * Конвертирует обычную запись выражение в ОПЗ
+ * @param {String} exp выражение в инфиксной нотации
+ * @returns {String} выражение в постфиксной нотации
+ */
 const toPostfix = (exp) => {
   let out = []
   let ops = []
@@ -22,7 +26,9 @@ const toPostfix = (exp) => {
           ops.pop()
           break
         default:
-          if (operators[ops[ops.length - 1]] >= operators[token] && operators[token] !== 1) { out.push(ops.pop()) }
+          if (operators[ops[ops.length - 1]] >= operators[token] && operators[token] !== 1) {
+            out.push(ops.pop())
+          }
           ops.push(token)
           break
       }

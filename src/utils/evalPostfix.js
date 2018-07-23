@@ -36,6 +36,11 @@ const reduce = (fraction) => {
   return {numerator: fraction.numerator / common, denominator: fraction.denominator / common}
 }
 
+/**
+ * Считает выражение в ОПЗ
+ * @param {String} exp выражение в ОПЗ
+ * @returns {String} максимально сокращенную дробь, полученную после всех вычислений
+ */
 const evalPostfix = (exp) => {
   let out = []
   exp.split(' ').forEach(token => {
@@ -55,7 +60,3 @@ const evalPostfix = (exp) => {
 }
 
 export default evalPostfix
-
-// 1/2 + 1/3
-// common = 6
-// 1 * 6 / 2  + 1 * 6 / 3

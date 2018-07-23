@@ -12,6 +12,9 @@
 <script>
 import operators from '../directives/onlyOperators'
 
+/**
+ * Компонент операторов
+ */
 export default {
   directives: {
     operators
@@ -23,6 +26,12 @@ export default {
     }
   },
   methods: {
+    /**
+     * Эвент обновления оператора
+     * Вызываеться после форматирования
+     * @event updateFraction
+     * @type {Object} дробь
+     */
     updateOperator (event) {
       this.$emit('updateOperator', event.detail)
     }
