@@ -1,4 +1,5 @@
 import { toPostfix, evalPostfix } from '@/utils'
+import Vue from 'vue'
 
 const emptyFraction = { numerator: '', denominator: '' }
 
@@ -60,7 +61,7 @@ const mutations = {
     fraction.numerator = data.numerator
   },
   updateOperator: (state, { index, data }) => {
-    state.operators[index] = data
+    Vue.set(state.operators, index, data)
   },
   setValue: (state, fraction) => { state.value = fraction }
 }
