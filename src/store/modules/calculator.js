@@ -10,7 +10,7 @@ const initialState = {
   ],
   operators: [''],
   value: {...emptyFraction},
-  errors: []
+  error: undefined
 }
 
 const getters = {
@@ -42,9 +42,14 @@ const actions = {
         let postfix = toPostfix(context.getters.toString)
         let value = evalPostfix(postfix).split('/')
         let fraction = { numerator: value[0], denominator: value[1] }
+        if (isNaN(fraction.numerator) || isNaN(fraction.denominator)) {
+          throw new Error('Невозможно высчитать это выражение (деление на 0)')
+        }
         context.commit('setValue', fraction)
+        context.commit('setError', {})
       } catch (e) {
-        context.commit('setErrors', e)
+        context.commit('setValue', emptyFraction)
+        context.commit('setError', e)
       }
     }
   }
@@ -64,7 +69,7 @@ const mutations = {
     Vue.set(state.operators, index, data)
   },
   setValue: (state, fraction) => { state.value = fraction },
-  setErrors: (state, errors) => { state.errors = errors }
+  setError: (state, error) => { state.error = error.message }
 }
 
 export default {

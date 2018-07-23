@@ -23,6 +23,9 @@
                 @updateFraction="updateFraction({index, data: $event})"
             />
         </div>
+        <h3 class="first__container__error" v-if="error">
+            {{ error }}
+        </h3>
     </div>
 </template>
 
@@ -41,7 +44,7 @@ export default {
   name: 'first',
   computed: {
     ...mapState('calculator', [
-      'fractions', 'operators', 'value'
+      'fractions', 'operators', 'value', 'error'
     ]),
     ...mapGetters('calculator', ['expressions'])
   },
@@ -67,6 +70,10 @@ export default {
                 justify-content: center;
                 align-content: center;
             }
+        }
+
+        &__error {
+            color: #c41a16
         }
     }
 </style>
