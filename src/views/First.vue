@@ -5,26 +5,30 @@
         <div class="first__container__fraction-container">
             <div
                 class="first__container__fraction-container__group"
-                v-for="(fraction, index) in fractions"
+                v-for="(expression, index) in expressions"
                 :key="index"
             >
                 <fraction
-                    :value="fraction"
+                    :value="expression"
                     @updateFraction="updateFraction({index, data: $event})"
                 />
                 <operator
-                    v-if="operators[index] != undefined"
-                    :value="operators[index]"
+                    v-if="expression.operator != undefined"
+                    :value="expression.operator"
                     @updateOperator="updateOperator({index, data: $event})"
                 />
             </div>
-
+            <h1>=</h1>
+            <fraction
+                :value="value"
+                @updateFraction="updateFraction({index, data: $event})"
+            />
         </div>
     </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import Fraction from '@/components/Fraction'
 import Operator from '../components/Operator'
 
@@ -36,9 +40,12 @@ export default {
     text: ''
   }),
   name: 'first',
-  computed: mapState('calculator', [
-    'fractions', 'operators'
-  ]),
+  computed: {
+    ...mapState('calculator', [
+      'fractions', 'operators', 'value'
+    ]),
+    ...mapGetters('calculator', ['expressions'])
+  },
   methods: mapActions('calculator', [
     'addFraction', 'updateFraction', 'updateOperator', 'calculate'
   ])

@@ -13,6 +13,7 @@ const initialState = {
 }
 
 const getters = {
+  expressions: state => (state.fractions.map((fraction, index) => ({...fraction, operator: state.operators[index]}))),
   filled: state => !(!!state.fractions.filter(fraction => fraction.numerator === '' || fraction.denominator === '').length ||
                     !!state.operators.filter(operator => operator === '').length),
   toString: (state, getters) =>
@@ -26,16 +27,24 @@ const getters = {
 
 const actions = {
   addFraction: (context) => context.commit('addFraction'),
-  updateFraction: (context, {index, data}) => context.commit('updateFraction', {index, data}),
-  updateOperator: (context, {index, data}) => context.commit('updateOperator', {index, data}),
+  updateFraction: (context, {index, data}) => {
+    context.commit('updateFraction', {index, data})
+    context.dispatch('calculate')
+  },
+  updateOperator: (context, {index, data}) => {
+    context.commit('updateOperator', {index, data})
+    context.dispatch('calculate')
+  },
   calculate: (context) => {
-    try {
-      let postfix = toPostfix(context.getters.toString)
-      let value = evalPostfix(postfix).split('/')
-      let fraction = { numerator: value[0], denominator: value[1] }
-      context.commit('setValue', fraction)
-    } catch (e) {
-      console.log('shit')
+    if (context.getters.filled) {
+      try {
+        let postfix = toPostfix(context.getters.toString)
+        let value = evalPostfix(postfix).split('/')
+        let fraction = { numerator: value[0], denominator: value[1] }
+        context.commit('setValue', fraction)
+      } catch (e) {
+        console.log('')
+      }
     }
   }
 }

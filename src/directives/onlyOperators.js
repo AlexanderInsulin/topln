@@ -20,8 +20,8 @@ const onlyOperators = {
     el.dataset.prevValue = el.value
     el.addEventListener('input', () => onInput(el, vnode))
   },
-  componentUpdated: (el) => {
-    el.dataset.prevValue = 'el.value'
+  componentUpdated: (el, vnode) => {
+    el.value = vnode.data
   }
 }
 
