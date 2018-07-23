@@ -11,6 +11,15 @@ const initialState = {
 }
 
 const getters = {
+  filled: state => !(!!state.fractions.filter(fraction => fraction.numerator === '' || fraction.denominator === '').length ||
+                    !!state.operators.filter(operator => operator === '').length),
+  toString: (state, getters) =>
+    (getters.filled
+      ? (state.fractions.map((fraction, index) => (
+        `${fraction.numerator}/${fraction.denominator}${state.operators[index] ? ' ' + state.operators[index] : ''}`
+      )))
+      : [])
+      .join(' ')
 }
 
 const actions = {
